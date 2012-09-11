@@ -20,29 +20,15 @@ public class MultiUserController extends MultiActionController {
 	public ModelAndView view(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		System.out.println(" multiuser Add method called");
-		List<Roles> arrayList=getUserServiceImpl().getAllGuests();
-		for (Iterator iterator = arrayList.iterator(); iterator.hasNext();) {
-			Roles roles = (Roles) iterator.next();
-		System.out.println("roles---"+roles.getRoleDescription());	
-		}
-		return  new ModelAndView("guest", "roleList", arrayList);
+		Roles roleForm= new Roles();
+		return  new ModelAndView("guest", "roleForm", roleForm);
 	}
 	
 	public ModelAndView add(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		System.out.println("multiuser add method called");
-		
-		Roles roles= new Roles();
-		roles.setRoleName(request.getParameter("rolename"));
-		roles.setRoleDescription(request.getParameter("roledescription"));
-		getUserServiceImpl().persist(roles);
-		roles=new Roles();
-		List<Roles> arrayList=getUserServiceImpl().getAllGuests();
-		for (Iterator iterator = arrayList.iterator(); iterator.hasNext();) {
-			 roles = (Roles) iterator.next();
-		System.out.println("roles--add method-"+roles.getRoleDescription());	
-		}
-		return  new ModelAndView("guest", "roleList", arrayList);
+			HttpServletResponse response , Roles roleForm) throws Exception {
+		System.out.println("roles.getRoleName() :::"+roleForm.getRoleName());
+		getUserServiceImpl().persist(roleForm);
+		return  new ModelAndView("guest", "roleForm", roleForm);
 	}
 	
 	public ModelAndView remove(HttpServletRequest request,
